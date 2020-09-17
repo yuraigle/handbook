@@ -1,0 +1,18 @@
+insert into regions (name, capital, area) values (N'Auvergne-Rhône-Alpes', N'Lyon', 69711);
+insert into regions (name, capital, area) values (N'Bourgogne-Franche-Comté', N'Dijon', 47784);
+insert into regions (name, capital, area) values (N'Bretagne', N'Rennes', 27208);
+insert into regions (name, capital, area) values (N'Centre-Val de Loire', N'Orléans', 39151);
+insert into regions (name, capital, area) values (N'Corse', N'Ajaccio', 8680);
+insert into regions (name, capital, area) values (N'Grand Est', N'Strasbourg', 57441);
+insert into regions (name, capital, area) values (N'Hauts-de-France', N'Lille', 31806);
+insert into regions (name, capital, area) values (N'Île-de-France', N'Paris', 12011);
+insert into regions (name, capital, area) values (N'Normandie', N'Rouen', 29907);
+insert into regions (name, capital, area) values (N'Nouvelle-Aquitaine', N'Bordeaux', 84036);
+insert into regions (name, capital, area) values (N'Occitanie', N'Toulouse', 72724);
+insert into regions (name, capital, area) values (N'Pays de la Loire', N'Nantes', 32082);
+insert into regions (name, capital, area) values (N'Provence-Alpes-Côte d''Azur', N'Marseille', 31400);
+insert into regions (name, capital, area) values (N'Guadeloupe', N'Basse-Terre', 1628);
+insert into regions (name, capital, area) values (N'Guyane', N'Cayenne', 83534);
+insert into regions (name, capital, area) values (N'La Réunion', N'Saint-Denis', 2504);
+insert into regions (name, capital, area) values (N'Martinique', N'Fort-de-France', 1128);
+insert into regions (name, capital, area) values (N'Mayotte', N'Mamoudzou', '374');
