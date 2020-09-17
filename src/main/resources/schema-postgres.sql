@@ -1,4 +1,4 @@
--- ZONES
+-- REGIONS
 DROP TABLE IF EXISTS regions CASCADE;
 DROP SEQUENCE IF EXISTS regions_id_seq;
 
