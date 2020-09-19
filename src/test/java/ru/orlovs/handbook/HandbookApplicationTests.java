@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.endsWith;
@@ -21,6 +22,7 @@ class HandbookApplicationTests {
     private MockMvc mockMvc;
 
     @Test
+    @WithMockUser(authorities = {"member"}, username = "yuri")
     void shouldReturnOneRegion() throws Exception {
         this.mockMvc.perform(get("/api/regions/1"))
                 .andExpect(status().isOk())
@@ -29,6 +31,7 @@ class HandbookApplicationTests {
     }
 
     @Test
+    @WithMockUser(authorities = {"member"}, username = "yuri")
     void shouldValidateRequest() throws Exception {
         this.mockMvc.perform(post("/api/regions")
                 .content("{\"name\":\"one\",\"area\":\"1\"}")
@@ -39,6 +42,7 @@ class HandbookApplicationTests {
     }
 
     @Test
+    @WithMockUser(authorities = {"member"}, username = "yuri")
     void shouldCreateRegion() throws Exception {
         this.mockMvc.perform(post("/api/regions")
                 .content("{\"name\":\"one\",\"capital\":\"one\",\"area\":\"1\"}")
