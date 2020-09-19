@@ -67,11 +67,10 @@ export default {
   axios: {
     baseURL: 'http://localhost:8080',
   },
-  /*
-   ** Build configuration
-   ** See https://nuxtjs.org/api/configuration-build/
-   */
-  build: {},
+
+  generate: {
+    dir: '../src/main/resources/webapp-dist',
+  },
 
   buefy: {
     materialDesignIcons: false,
