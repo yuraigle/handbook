@@ -27,9 +27,11 @@ public class TrailingSlashRedirectingFilter extends OncePerRequestFilter {
             FilterChain chain
     ) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        boolean isStaticFile = staticFileRx.matcher(uri).matches();
 
-        if (!isStaticFile && !uri.startsWith("/api") && !uri.endsWith("/")) {
+        if (!uri.endsWith("/")
+                && !uri.startsWith("/api")
+                && !staticFileRx.matcher(uri).matches()
+        ) {
             ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromRequest(req);
             builder.replacePath(String.format("%s/", builder.build().getPath()));
             resp.setStatus(HttpStatus.MOVED_PERMANENTLY.value());

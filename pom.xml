@@ -8,11 +8,11 @@
         <version>2.3.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ru.bylins</groupId>
+    <groupId>ru.orlovs</groupId>
     <artifactId>handbook</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>handbook</name>
-    <description>bylins mud handbook</description>
+    <description>Simple CRUD app template</description>
 
     <properties>
         <java.version>1.8</java.version>
