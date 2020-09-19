@@ -15,7 +15,22 @@
         </aside>
       </div>
 
-      <div class="content column is-10 pt-6">
+      <div class="content column is-10">
+        <b-navbar type="is-white">
+          <template slot="end">
+            <div class="navbar-item">
+              {{ this.$auth.user.username }}
+            </div>
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-light" @click="handleLogout">
+                  <b-icon icon="sign-out-alt"></b-icon>
+                </a>
+              </div>
+            </div>
+          </template>
+        </b-navbar>
+
         <nuxt />
       </div>
     </div>
@@ -24,7 +39,14 @@
 
 <script>
 export default {
-  methods: {},
+  methods: {
+    handleLogout() {
+      this.$auth.logout().then(() => {
+        this.$router.push('/login/')
+        this.showWarn('Bye!')
+      })
+    },
+  },
 }
 </script>
 

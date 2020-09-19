@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -27,8 +29,12 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public UserDetails me() {
+    public Map<String, UserDetails> me() {
         Authentication authenticate = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetails) authenticate.getPrincipal();
+        UserDetails user = (UserDetails) authenticate.getPrincipal();
+
+        Map<String, UserDetails> result = new HashMap<>();
+        result.put("user", user);
+        return result;
     }
 }

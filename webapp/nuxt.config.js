@@ -54,9 +54,11 @@ export default {
     'nuxt-buefy',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
   router: {
     base: '/',
+    middleware: ['auth'],
     trailingSlash: true,
     linkActiveClass: 'is-active',
   },
@@ -66,6 +68,32 @@ export default {
    */
   axios: {
     baseURL: 'http://localhost:8080',
+  },
+
+  auth: {
+    localStorage: false,
+    cookie: {
+      options: {
+        expires: 7,
+      },
+    },
+    strategies: {
+      local: {
+        token: { property: 'token' },
+        autoFetchUser: true,
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post' },
+          user: { url: '/api/auth/me', method: 'get', propertyName: 'user' },
+          logout: false,
+        },
+      },
+    },
+    redirect: {
+      login: '/login/',
+      logout: '/',
+      callback: '/login/',
+      home: '/',
+    },
   },
 
   generate: {

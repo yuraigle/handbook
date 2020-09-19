@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import ru.orlovs.handbook.domain.Account;
 import ru.orlovs.handbook.domain.AccountRepo;
 
+import javax.annotation.PostConstruct;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 
@@ -60,5 +61,18 @@ public class AuthService implements UserDetailsService {
         return new User(account.getUsername(), account.getPassword(),
                 Collections.singleton(new SimpleGrantedAuthority(account.getRole()))
         );
+    }
+
+    @PostConstruct
+    public void seedUsers() {
+        if (accountRepo.count() == 0) {
+            RegisterRequest req = new RegisterRequest();
+            req.setUsername("orlov");
+            req.setPassword("asdasd");
+            req.setName("Yuri Orlov");
+            register(req);
+        }
+
+        log.info("1st user created. orlov : asdasd");
     }
 }
