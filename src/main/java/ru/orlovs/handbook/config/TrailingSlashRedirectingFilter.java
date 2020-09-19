@@ -11,9 +11,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 @Component
 public class TrailingSlashRedirectingFilter extends OncePerRequestFilter {
+
+    // js|css|html|ico|svg|ttf|woff2|whatever
+    private final Pattern staticFileRx = Pattern
+            .compile("^.*\\.[a-z]{2,4}[0-9]?$", Pattern.CASE_INSENSITIVE);
 
     @Override
     protected void doFilterInternal(
@@ -22,16 +27,7 @@ public class TrailingSlashRedirectingFilter extends OncePerRequestFilter {
             FilterChain chain
     ) throws ServletException, IOException {
         String uri = req.getRequestURI();
-
-        // TODO переделать
-        boolean isStaticFile = false;
-        if (uri.endsWith(".js") || uri.endsWith(".css") ||
-                uri.endsWith(".html") || uri.endsWith(".ico") ||
-                uri.endsWith(".woff") || uri.endsWith(".woff2") ||
-                uri.endsWith(".svg") || uri.endsWith(".ttf") ||
-                uri.endsWith(".eot")
-        )
-            isStaticFile = true;
+        boolean isStaticFile = staticFileRx.matcher(uri).matches();
 
         if (!isStaticFile && !uri.startsWith("/api") && !uri.endsWith("/")) {
             ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromRequest(req);
