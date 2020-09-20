@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 @RestController
@@ -31,10 +31,6 @@ public class AuthController {
     public Map<String, AccountDetails> me() {
         Authentication authenticate = SecurityContextHolder.getContext().getAuthentication();
         AccountDetails account = (AccountDetails) authenticate.getPrincipal();
-        account.setPassword(null);
-
-        Map<String, AccountDetails> result = new HashMap<>();
-        result.put("user", account);
-        return result;
+        return Collections.singletonMap("user", account);
     }
 }

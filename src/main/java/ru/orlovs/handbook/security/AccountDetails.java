@@ -1,5 +1,6 @@
 package ru.orlovs.handbook.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +18,7 @@ public class AccountDetails implements UserDetails {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private String role;

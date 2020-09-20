@@ -46,10 +46,7 @@ public class AuthService implements UserDetailsService {
                 new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword())
         );
         String token = jwtTokenProvider.createToken(authenticate);
-
-        AccountDetails user = loadUserByUsername(req.getUsername());
-        user.setPassword(null);
-
+        AccountDetails user = (AccountDetails) authenticate.getPrincipal();
         return new LoginResponse(token, user);
     }
 
