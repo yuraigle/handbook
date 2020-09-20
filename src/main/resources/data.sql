@@ -15,4 +15,4 @@ insert into regions (name, capital, area) values (N'Guadeloupe', N'Basse-Terre',
 insert into regions (name, capital, area) values (N'Guyane', N'Cayenne', 83534);
 insert into regions (name, capital, area) values (N'La Réunion', N'Saint-Denis', 2504);
 insert into regions (name, capital, area) values (N'Martinique', N'Fort-de-France', 1128);
-insert into regions (name, capital, area) values (N'Mayotte', N'Mamoudzou', '374');
+insert into regions (name, capital, area) values (N'Mayotte', N'Mamoudzou', 374);
