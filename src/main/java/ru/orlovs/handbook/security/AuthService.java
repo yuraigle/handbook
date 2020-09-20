@@ -6,9 +6,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +15,6 @@ import ru.orlovs.handbook.domain.AccountRepo;
 
 import javax.annotation.PostConstruct;
 import java.time.ZonedDateTime;
-import java.util.Collections;
 
 @Log4j2
 @Service
@@ -50,17 +46,18 @@ public class AuthService implements UserDetailsService {
                 new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword())
         );
         String token = jwtTokenProvider.createToken(authenticate);
-        return new LoginResponse(token);
+
+        AccountDetails user = loadUserByUsername(req.getUsername());
+        user.setPassword(null);
+
+        return new LoginResponse(token, user);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Account account = accountRepo.findByUsername(s)
+    public AccountDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        Account u = accountRepo.findByUsername(s)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-
-        return new User(account.getUsername(), account.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority(account.getRole()))
-        );
+        return new AccountDetails(u.getId(), u.getUsername(), u.getPassword(), u.getRole());
     }
 
     @PostConstruct

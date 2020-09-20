@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 @Component
-public class TrailingSlashRedirectingFilter extends OncePerRequestFilter {
+public class TrailingSlashFilter extends OncePerRequestFilter {
 
     // js|css|html|ico|svg|ttf|woff2|whatever
     private final Pattern staticFileRx = Pattern

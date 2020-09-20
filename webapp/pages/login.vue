@@ -78,7 +78,7 @@ export default {
 
       this.$auth
         .loginWith('local', { data })
-        .then(() => this.showInfo('Hello!'))
+        .then((resp) => this.$auth.setUser(resp.data.user))
         .catch((err) => this.$store.dispatch('warnings/apiError', err))
     },
   },

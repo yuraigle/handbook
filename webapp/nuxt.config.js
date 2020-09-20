@@ -80,7 +80,7 @@ export default {
     strategies: {
       local: {
         token: { property: 'token' },
-        autoFetchUser: true,
+        autoFetchUser: false,
         endpoints: {
           login: { url: '/api/auth/login', method: 'post' },
           user: { url: '/api/auth/me', method: 'get', propertyName: 'user' },

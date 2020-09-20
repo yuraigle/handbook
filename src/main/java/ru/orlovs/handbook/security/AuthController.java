@@ -3,7 +3,6 @@ package ru.orlovs.handbook.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,12 +28,13 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public Map<String, UserDetails> me() {
+    public Map<String, AccountDetails> me() {
         Authentication authenticate = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails user = (UserDetails) authenticate.getPrincipal();
+        AccountDetails account = (AccountDetails) authenticate.getPrincipal();
+        account.setPassword(null);
 
-        Map<String, UserDetails> result = new HashMap<>();
-        result.put("user", user);
+        Map<String, AccountDetails> result = new HashMap<>();
+        result.put("user", account);
         return result;
     }
 }

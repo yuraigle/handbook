@@ -8,8 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -33,18 +31,16 @@ public class JwtTokenProvider {
     }
 
     public String createToken(Authentication authentication) {
-        UserDetails details = (UserDetails) authentication.getPrincipal();
-        String subj = details.getUsername() + "|"
-                + details.getPassword() + "|"
-                + details.getAuthorities().stream().findFirst().toString();
-
+        AccountDetails account = (AccountDetails) authentication.getPrincipal();
+        String subj = account.getId() + "|" + account.getUsername() + "|" +
+                account.getPassword() + "|" + account.getRole();
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
+        Date till = Date.from(now.toInstant().plusMillis(validityInMilliseconds));
 
         return Jwts.builder()
                 .setSubject(subj)
                 .setIssuedAt(now)
-                .setExpiration(validity)
+                .setExpiration(till)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
@@ -65,10 +61,10 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        String[] attrs = subj.split("\\|");
+        String[] u = subj.split("\\|");
 
-        Set<GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority(attrs[2]));
-        UserDetails user = new User(attrs[0], attrs[1], authorities);
-        return new UsernamePasswordAuthenticationToken(user, user.getPassword(), authorities);
+        AccountDetails account = new AccountDetails(Long.parseLong(u[0]), u[1], u[2], u[3]);
+        Set<GrantedAuthority> roles = Collections.singleton(new SimpleGrantedAuthority(u[3]));
+        return new UsernamePasswordAuthenticationToken(account, u[1], roles);
     }
 }
