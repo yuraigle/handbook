@@ -31,7 +31,12 @@
                 ></b-input>
               </b-field>
               <b-field>
-                <b-button expanded type="is-info" @click="handleLogin">
+                <b-button
+                  expanded
+                  type="is-info"
+                  :loading="loading"
+                  @click="handleLogin"
+                >
                   Login
                 </b-button>
               </b-field>
@@ -61,7 +66,10 @@ export default {
   data: () => {
     const formFields = {}
     Object.keys(schema).forEach((key) => (formFields[key] = undefined))
-    return formFields
+    return {
+      loading: false,
+      ...formFields,
+    }
   },
 
   validations: schema,
@@ -73,13 +81,20 @@ export default {
         return
       }
 
+      this.loading = true
       const data = {}
       Object.keys(schema).forEach((key) => (data[key] = this[key]))
 
       this.$auth
         .loginWith('local', { data })
-        .then((resp) => this.$auth.setUser(resp.data.user))
+        .then((resp) => {
+          this.$auth.setUser(resp.data.user)
+          this.$router.push('/')
+        })
         .catch((err) => this.$store.dispatch('warnings/apiError', err))
+        .finally(() => {
+          this.loading = false
+        })
     },
   },
 }

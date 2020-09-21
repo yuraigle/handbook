@@ -56,7 +56,7 @@ export default {
   props: {
     obj: { type: Object, default: () => ({}) },
     title: { type: String, required: true },
-    okay: { type: String, required: false, default: 'Save' },
+    okay: { type: String, default: 'Save' },
   },
 
   data: () => {
