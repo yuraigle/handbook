@@ -8,7 +8,7 @@
           <b-button
             type="is-primary"
             icon-left="plus"
-            @click="modalShown = 'add'"
+            @click="$store.commit('modals/setShown', 'New Region')"
           >
             Add
           </b-button>
@@ -18,7 +18,7 @@
             :disabled="!selected.id"
             type="is-warning"
             icon-left="edit"
-            @click="modalShown = 'edit'"
+            @click="$store.commit('modals/setShown', 'Edit Region')"
           >
             Edit
           </b-button>
@@ -67,30 +67,13 @@
       </b-table-column>
     </b-table>
 
-    <b-modal
-      :active="modalShown === 'add'"
-      has-modal-card
-      @close="modalShown = ''"
-    >
-      <RegionForm
-        title="New Region"
-        @close="modalShown = ''"
-        @submit="handleCreate"
-      ></RegionForm>
-    </b-modal>
+    <RegionForm title="New Region" @submit="handleCreate"></RegionForm>
 
-    <b-modal
-      :active="modalShown === 'edit'"
-      has-modal-card
-      @close="modalShown = ''"
-    >
-      <RegionForm
-        title="Edit Region"
-        :obj="selected"
-        @close="modalShown = ''"
-        @submit="handleUpdate"
-      ></RegionForm>
-    </b-modal>
+    <RegionForm
+      title="Edit Region"
+      :obj="selected"
+      @submit="handleUpdate"
+    ></RegionForm>
   </div>
 </template>
 
@@ -103,7 +86,6 @@ export default {
   },
 
   data: () => ({
-    modalShown: '',
     selected: {},
     query: '',
   }),
@@ -122,14 +104,14 @@ export default {
 
     handleCreate(formData) {
       this.$store.dispatch('regions/create', formData).then(() => {
-        this.modalShown = ''
+        this.$store.commit('modals/setShown', '')
         this.showInfo('Successfully created')
       })
     },
 
     handleUpdate(formData) {
-      this.$store.dispatch('regions/create', formData).then(() => {
-        this.modalShown = ''
+      this.$store.dispatch('regions/update', formData).then(() => {
+        this.$store.commit('modals/setShown', '')
         this.showInfo('Successfully saved')
       })
     },

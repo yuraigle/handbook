@@ -45,6 +45,22 @@ export const actions = {
     })
   },
 
+  update({ commit, dispatch }, payload) {
+    return new Promise((resolve) => {
+      commit('setLoading', true)
+
+      const { id } = payload
+      this.$axios
+        .put(`/api/regions/${id}`, payload)
+        .then(() => {
+          dispatch('fetchList')
+          resolve()
+        })
+        .catch((err) => dispatch('warnings/apiError', err, { root: true }))
+        .finally(() => commit('setLoading', false))
+    })
+  },
+
   delete({ commit, dispatch }, payload) {
     return new Promise((resolve) => {
       commit('setLoading', true)
