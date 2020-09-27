@@ -99,6 +99,7 @@ export default {
 
   methods: {
     handleRefresh() {
+      this.selected = {}
       this.$store.dispatch('regions/fetchList')
     },
 
@@ -106,6 +107,7 @@ export default {
       this.$store.dispatch('regions/create', formData).then(() => {
         this.$store.commit('modals/setShown', '')
         this.showInfo('Successfully created')
+        this.handleRefresh()
       })
     },
 
@@ -113,6 +115,7 @@ export default {
       this.$store.dispatch('regions/update', formData).then(() => {
         this.$store.commit('modals/setShown', '')
         this.showInfo('Successfully saved')
+        this.handleRefresh()
       })
     },
 
