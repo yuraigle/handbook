@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div class="modal-card" style="width: auto">
+    <div class="modal-card" style="width: 280px">
       <header class="modal-card-head">
         <p class="modal-card-title">{{ title }}</p>
       </header>
@@ -33,10 +33,14 @@
         </b-field>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="$emit('close')">
-          Close
-        </button>
-        <button class="button is-primary">{{ okay }}</button>
+        <div class="container">
+          <div class="buttons is-right">
+            <button class="button" type="button" @click="$emit('close')">
+              Cancel
+            </button>
+            <button class="button is-primary">{{ okText }}</button>
+          </div>
+        </div>
       </footer>
     </div>
   </form>
@@ -56,7 +60,7 @@ export default {
   props: {
     obj: { type: Object, default: () => ({}) },
     title: { type: String, required: true },
-    okay: { type: String, default: 'Save' },
+    okay: { type: String, default: '' },
   },
 
   data: () => {
@@ -66,6 +70,12 @@ export default {
   },
 
   validations: schema,
+
+  computed: {
+    okText() {
+      return this.okay ? this.okay : this.obj.id ? 'Edit' : 'Create'
+    },
+  },
 
   created() {
     if (this.obj) {

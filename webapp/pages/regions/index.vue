@@ -137,6 +137,8 @@ export default {
     handleDeleteRequest() {
       this.$buefy.dialog.confirm({
         message: 'Delete this region?',
+        type: 'is-danger',
+        confirmText: 'Delete',
         onConfirm: () => {
           this.$store
             .dispatch('regions/delete', { id: this.selected.id })
