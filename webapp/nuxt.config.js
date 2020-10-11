@@ -21,8 +21,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: '/fontawesome/css/fontawesome.min.css' },
-      { rel: 'stylesheet', href: '/fontawesome/css/solid.min.css' },
+      { rel: 'stylesheet', href: '/fas/css/fontawesome.min.css' },
+      { rel: 'stylesheet', href: '/fas/css/solid.min.css' },
     ],
   },
   /*
@@ -97,7 +97,7 @@ export default {
   },
 
   generate: {
-    dir: '../src/main/resources/webapp-dist',
+    // dir: '../src/main/resources/webapp-dist',
     fallback: true,
   },
 

@@ -17,6 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
+    // если фронт отдельно на nginx-е, удалить
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // all requests -> SPA

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+// если фронт отдельно на nginx-е, удалить
 @Component
 public class TrailingSlashFilter extends OncePerRequestFilter {
 
@@ -29,7 +30,7 @@ public class TrailingSlashFilter extends OncePerRequestFilter {
         String uri = req.getRequestURI();
 
         if (!uri.endsWith("/")
-                && !uri.startsWith("/api")
+                && !uri.contains("/api/")
                 && !staticFileRx.matcher(uri).matches()
         ) {
             ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromRequest(req);

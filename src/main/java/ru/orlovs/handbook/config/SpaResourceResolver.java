@@ -7,10 +7,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import java.io.IOException;
 
-/**
- * all requests -> index.html
- */
-
+// если фронт отдельно на nginx-е, удалить
 @Component
 public class SpaResourceResolver extends PathResourceResolver {
 
